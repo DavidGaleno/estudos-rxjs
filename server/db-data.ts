@@ -178,7 +178,7 @@ export const COURSES: any = {
     iconUrl: 'https://s3-us-west-1.amazonaws.com/angular-university/course-images/material_design.png',
     category: 'BEGINNER',
     seqNo: 14,
-    url: 'angular-material-course',
+    url: 'reactive-angular-course',
     price: 50
   }
 
