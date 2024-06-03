@@ -1,3 +1,9 @@
-@if (messageService.message$ | async) {
-<div>oi</div>
+@for (error of errors; track $index) {
+<div class="messages-container">
+  <div class="message">
+    {{ error }}
+  </div>
+  <mat-icon class="close" (click)="onClose(error)">close</mat-icon>
+</div>
+
 }

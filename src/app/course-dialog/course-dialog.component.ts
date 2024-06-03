@@ -7,12 +7,13 @@ import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { CourseService } from '../services/course.service';
 import { LoadingService } from '../loading/loading.service';
+import { MessagesService } from '../messages/messages.service';
+import { CourseStore } from '../services/courses.store';
 
 @Component({
   selector: 'course-dialog',
   templateUrl: './course-dialog.component.html',
-  styleUrls: ['./course-dialog.component.css'],
-  providers: [LoadingService]
+  styleUrls: ['./course-dialog.component.css']
 })
 export class CourseDialogComponent implements AfterViewInit {
 
@@ -23,8 +24,8 @@ export class CourseDialogComponent implements AfterViewInit {
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<CourseDialogComponent>,
-    private courseService: CourseService,
-    private loadingService: LoadingService,
+    private courseStore: CourseStore,
+    private messageService: MessagesService,
     @Inject(MAT_DIALOG_DATA) course: Course) {
 
     this.course = course;
@@ -47,13 +48,18 @@ export class CourseDialogComponent implements AfterViewInit {
 
     const changes = this.form.value;
 
-    const postCourse$ = this.courseService.postCourse(this.course.id, changes)
+    this.courseStore.putCourse(this.course.id,  changes)
+    this.close(changes)
 
-    const loadPostCourse$ = this.loadingService.showLoaderUntilCompleted(postCourse$);
 
-    loadPostCourse$.subscribe(val => {
-      this.close(val)
-    });
+    // loadPostCourse$.pipe(catchError(err => {
+    //   const errorMessage = 'Could not save'
+    //   this.messageService.showErrors(errorMessage)
+    //   console.log(errorMessage, err);
+    //   return throwError(err)
+    // })).subscribe(val => {
+    //   this.close(val)
+    // });
 
   }
 

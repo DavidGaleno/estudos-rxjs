@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthStore } from './services/auth.store';
+import { Observable } from 'rxjs';
+import { Course } from './model/course';
+import { Lesson } from './model/lesson';
 
 
 
@@ -9,17 +13,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
 
-  constructor() {
+
+  constructor(public authStore: AuthStore) {
 
   }
 
   ngOnInit() {
 
-
   }
 
   logout() {
-
+    this.authStore.logout()
   }
 
 }

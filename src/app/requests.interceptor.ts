@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { LoadingService } from './loading/loading.service';
 import { catchError, finalize, tap } from 'rxjs/operators';
 import { MessagesService } from './messages/messages.service';
+import { response } from 'express';
 
 export function loadingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
   const loadingService = inject(LoadingService)
@@ -11,10 +12,11 @@ export function loadingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerF
   return next(req).pipe(finalize(() => loadingService.loadingOff()))
 }
 
-export function errorMessageInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
-  const messagesService = inject(MessagesService)
-  return next(req).pipe(tap((event) => event instanceof HttpResponse && messagesService.messageOff()), catchError((response) => {
-    messagesService.messageOn()
-    return of(response)
-  }))
-}
+// export function errorMessageInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
+//   // const messagesService = inject(MessagesService)
+//   // return next(req).pipe(tap((event) => event instanceof HttpResponse && messagesService.messageOff()), catchError((response) => {
+//   //   // messagesService.messageOn()
+//   //   return of(response)
+//   // }))
+//   return of(response)
+// }

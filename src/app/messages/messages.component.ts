@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Message } from '../model/message';
-import { tap } from 'rxjs/operators';
 import { MessagesService } from './messages.service';
 
 @Component({
@@ -11,18 +8,20 @@ import { MessagesService } from './messages.service';
 })
 export class MessagesComponent implements OnInit {
 
-
+  errors: string[] = []
   constructor(public messageService: MessagesService) {
   }
 
   ngOnInit() {
-    
+    this.messageService.errors$.subscribe(errors => {
+      this.errors = errors
+    })
 
   }
 
 
-  onClose() {
-
+  onClose(errorToBeDeleted: string) {
+    this.errors = this.errors.filter(error => error !== errorToBeDeleted)
 
   }
 

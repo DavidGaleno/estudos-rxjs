@@ -35,8 +35,9 @@ import { SearchLessonsComponent } from './search-lessons/search-lessons.componen
 import { LoadingComponent } from './loading/loading.component';
 import { CoursesCardListComponent } from './courses-card-list/courses-card-list.component';
 import { LoadingService } from './loading/loading.service';
-import { errorMessageInterceptor, loadingInterceptor } from './requests.interceptor';
+import { loadingInterceptor } from './requests.interceptor';
 import { MessagesService } from './messages/messages.service';
+import { CourseStore } from './services/courses.store';
 
 @NgModule({
   declarations: [
@@ -77,8 +78,8 @@ import { MessagesService } from './messages/messages.service';
     MatMomentDateModule,
     ReactiveFormsModule
   ],
-  providers: [LoadingService, MessagesService,
-    provideHttpClient(withInterceptors([errorMessageInterceptor]))
+  providers: [
+    provideHttpClient(withInterceptors([]))
   ],
   bootstrap: [AppComponent]
 })
